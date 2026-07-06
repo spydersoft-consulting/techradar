@@ -11,7 +11,7 @@ See each component's own README for development setup instructions.
 
 ## Repository status
 
-This repository was consolidated on 2026-07-06; the previous `techradar-data-api` and `techradar-frontend` repositories will be archived once the pipeline here is verified end-to-end.
+This repository was consolidated on 2026-07-06. The pipeline's PR, main (beta), and tag (release) paths have all been verified end-to-end; the previous `techradar-data-api` and `techradar-frontend` repositories will be archived shortly.
 
 ## Contributing
 
