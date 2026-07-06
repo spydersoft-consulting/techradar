@@ -1,0 +1,4 @@
+{
+    "*.{js,jsx,ts,tsx,html}": ["yarn prettier --write", "yarn eslint --fix"],
+    "*.{scss,css}": ["yarn prettier --write"]
+}

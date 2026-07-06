@@ -1,0 +1,6 @@
+@Spydersoft.TechRadar.Frontend_HostAddress = http://localhost:5041
+
+GET {{Spydersoft.TechRadar.Frontend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
