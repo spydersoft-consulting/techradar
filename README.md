@@ -9,6 +9,10 @@ Both components are built, versioned, and released together from this repository
 
 See each component's own README for development setup instructions.
 
+## Repository status
+
+This repository was consolidated on 2026-07-06; the previous `techradar-data-api` and `techradar-frontend` repositories will be archived once the pipeline here is verified end-to-end.
+
 ## Contributing
 
 1. Create your feature branch (`git checkout -b feature/fooBar`)

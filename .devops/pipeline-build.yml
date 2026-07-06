@@ -36,7 +36,13 @@ extends:
     containerRegistryName: github-spydersoft-docker
     helmfileRepoName: helmfileconfig
 
-    buildProject: '**/*.sln'
+    # Not '**/*.sln': Spydersoft.TechRadar.Frontend.sln is gitignored in the
+    # original techradar-frontend repo (*.sln under "Editor files") and was
+    # never actually committed, so it doesn't exist in this repo either.
+    # A csproj glob builds every project directly regardless of solution
+    # file presence, matching how techradar-data-api's original standalone
+    # pipeline built (buildProject: src/**/*.csproj).
+    buildProject: '**/*.csproj'
 
     publishProjects:
       - name: dataApi
