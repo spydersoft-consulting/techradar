@@ -263,3 +263,6 @@ dist-ssr
 **/output/*
 
 node_modules/*
+
+# Helm chart dependency downloads (regenerated from Chart.lock)
+**/charts/*.tgz
