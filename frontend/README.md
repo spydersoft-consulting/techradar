@@ -4,7 +4,7 @@
 
 ## Structure
 
-The application is a standard Create React App template, however, the **public** folder currently holds some non-React pages that handle the rendering of the view page (which renders the actual radar).
+The application is a Vite-based React application, however, the **public** folder currently holds some non-React pages that handle the rendering of the view page (which renders the actual radar).
 
 Eventually, these pages should be migrated to view components in the React app.
 
@@ -16,7 +16,7 @@ TODO: Need detail on BFF implementation
 
 ### API Library generation
 
-The client has two sets of generated code for API interaction:  one for the backend for frontend API (`Spydersoft.TechRadar.Frontend`, located in this repository) and one for the Data API (location tbd).
+The client has two sets of generated code for API interaction:  one for the backend for frontend API (`Spydersoft.TechRadar.Frontend`, located in this repository) and one for the Data API (`../../data-api`, in the sibling folder at the root of this repository).
 
 The files in **src/api** are generated using the OpenAPI Generator, specifically, the **typescript-axios** generator.  If you need to update those files because the API has changed, perform the following steps:
 

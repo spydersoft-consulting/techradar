@@ -1,6 +1,9 @@
 {
-  "name": "techradar-frontend",
+  "name": "techradar",
   "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "prepare": "husky"
+  },
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",

@@ -1,3 +1,0 @@
-. .husky/common.sh
-
-yarn lint-staged --relative

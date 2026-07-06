@@ -5,7 +5,7 @@ This project contains the .NET Core project which is the API for the Spydersoft 
 
 ## Development setup
 
-The project is a .Net 8 web application.  Visual Studio 2022 or the .NET 8 SDK are required.
+The project is a .NET 10 web application.  Visual Studio 2022 or the .NET 10 SDK are required.
 
 
 ### Configuration

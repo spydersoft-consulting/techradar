@@ -1,0 +1,96 @@
+## Build Pipeline - Build, publish container images, and update helmfile config
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: spydersoft-gh
+      name: spydersoft-consulting/azure-devops-templates
+    - repository: helmfileconfig
+      type: github
+      endpoint: spydersoft-gh
+      name: spydersoft-consulting/techradar-helm-config
+
+trigger:
+  tags:
+    include:
+      - "*"
+  branches:
+    include:
+      - main
+      - feature/*
+  paths:
+    exclude:
+      - README.md
+
+pr:
+  branches:
+    include:
+      - main
+
+extends:
+  template: pipelines/build-multi-container/v1.yml@templates
+  parameters:
+    gitVersionSpec: '6.0.x'
+    netCoreVersion: '10.0.x'
+    externalFeedCredentials: SpydersoftGithub
+    containerRegistryName: github-spydersoft-docker
+    helmfileRepoName: helmfileconfig
+
+    buildProject: '**/*.sln'
+
+    publishProjects:
+      - name: dataApi
+        project: data-api/src/Spydersoft.TechRadar.Data.Api/Spydersoft.TechRadar.Data.Api.csproj
+        artifactName: techradarDataApi
+      - name: frontend
+        project: frontend/src/Spydersoft.TechRadar.Frontend/Spydersoft.TechRadar.Frontend.csproj
+        artifactName: techradarFrontend
+
+    uiEnabled: true
+    uiSourceDirectory: frontend/src/techradar-ui
+
+    dockerImages:
+      - name: dataApi
+        dockerImageName: spydersoft-consulting/techradar-data-api
+        dockerFilePath: data-api/Dockerfile
+        artifactName: techradarDataApi
+        artifactZipName: Spydersoft.TechRadar.Data.Api
+      - name: frontend
+        dockerImageName: spydersoft-consulting/techradar-frontend
+        dockerFilePath: frontend/Dockerfile
+        artifactName: techradarFrontend
+        artifactZipName: Spydersoft.TechRadar.Frontend
+
+    #if it's a PR or build from main, don't update helmfile config or build/publish docker images
+    ${{ if or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranchName'], 'main')) }}:
+      updateHelmConfig: false
+      buildAndPublishDockerImages: false
+      executeSonar: true
+      uiExecuteSonar: true
+    ${{ else }}:
+      updateHelmConfig: true
+      buildAndPublishDockerImages: true
+      executeSonar: false
+      uiExecuteSonar: false
+
+    helmTagsCollection: "data_api=$(build.buildnumber),frontend=$(build.buildnumber)"
+
+    executeTests: true
+    testProjects: '**/*.Tests/*.csproj'
+
+    useSonarCloud: true
+    sonarCloudOrganization: spydersoft-consulting
+    sonarEndpointName: sonarcloud-spydersoft
+    sonarProjectKey: spydersoft-consulting_techradar
+    sonarProjectName: techradar
+    sonarExtraProperties: |
+      sonar.exclusions=**/data-api/**/Migrations/**/*,**/frontend/src/techradar-ui/**/*
+      sonar.scanner.scanAll=false
+      sonar.coverage.exclusions=**/*Program.cs,**/*Controller.cs
+
+    uiSonarEndpointName: sonarcloud-spydersoft
+    uiSonarCloudOrganization: spydersoft-consulting
+    uiUseSonarCloud: true
+    uiSonarConfigFile: react-sonar-project.properties
+    uiCodeCoverageFile: frontend/src/techradar-ui/output/coverage/cobertura-coverage.xml
+    uiUnitTestFile: frontend/src/techradar-ui/output/test/junit.xml
