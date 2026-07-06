@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "prettier-plugin-sort-json": "^4.0.0"
+  },
+  "packageManager": "yarn@4.5.1",
+  "scripts": {
+    "prepare": "husky"
+  }
+}
