@@ -66,6 +66,17 @@ extends:
         artifactName: techradarFrontend
         artifactZipName: Spydersoft.TechRadar.Frontend
 
+    helmCharts:
+      - name: techradar
+        chartPath: charts/techradar
+
+    # chart_publish runs in parallel with docker_publish (both depend only
+    # on Build) -- updateHelmConfig must explicitly wait on both, since the
+    # template's own default only waits on docker_publish.
+    updateHelmConfigDependsOn:
+      - docker_publish
+      - chart_publish
+
     # Three build shapes:
     #  - PR: build/test/sonar only, no publish, no helm-config update.
     #  - main: beta build (GitVersion tags X.Y.Z-beta.<n> per GitVersion.yml's
@@ -78,20 +89,23 @@ extends:
     ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       updateHelmConfig: false
       buildAndPublishDockerImages: false
+      buildAndPublishHelmCharts: false
       executeSonar: true
       uiExecuteSonar: true
     ${{ elseif eq(variables['Build.SourceBranchName'], 'main') }}:
       updateHelmConfig: true
       buildAndPublishDockerImages: true
+      buildAndPublishHelmCharts: true
       executeSonar: true
       uiExecuteSonar: true
     ${{ else }}:
       updateHelmConfig: true
       buildAndPublishDockerImages: true
+      buildAndPublishHelmCharts: true
       executeSonar: false
       uiExecuteSonar: false
 
-    helmTagsCollection: "data_api=$(build.buildnumber),frontend=$(build.buildnumber)"
+    helmTagsCollection: "data_api=$(build.buildnumber),frontend=$(build.buildnumber),chart_version=$(build.buildnumber)"
 
     executeTests: true
     testProjects: '**/*.Tests/*.csproj'
