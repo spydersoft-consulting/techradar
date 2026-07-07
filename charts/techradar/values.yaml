@@ -16,14 +16,6 @@ controllers:
           repository: ghcr.io/spydersoft-consulting/techradar-frontend
           tag: latest
           pullPolicy: IfNotPresent
-        # Expects a Secret named below (created by whatever the composing
-        # helm-config's secret provider is -- Vault, Sealed Secrets, a plain
-        # manual Secret, anything) containing OidcProxySettings__Oidc__Authority/
-        # ClientId/ClientSecret. Override the name to point at a differently
-        # named secret; this chart does not create it.
-        envFrom:
-          - secretRef:
-              name: techradar-frontend
         probes:
           liveness:
             enabled: true
@@ -58,15 +50,6 @@ controllers:
           repository: ghcr.io/spydersoft-consulting/techradar-data-api
           tag: latest
           pullPolicy: IfNotPresent
-        # Expects a Secret named below (created by whatever the composing
-        # helm-config's secret provider is -- Vault, Sealed Secrets, a plain
-        # manual Secret, anything) containing ConnectionStrings__TechRadarDatabase
-        # and Identity__Authority. Override the name to point at a differently
-        # named secret; this chart does not create it or know how the
-        # database/authority values inside it were assembled.
-        envFrom:
-          - secretRef:
-              name: techradar-data-api
         probes:
           liveness:
             enabled: true
@@ -127,8 +110,10 @@ route:
         namespace: envoy-gateway-system
         group: gateway.networking.k8s.io
         kind: Gateway
-    hostnames:
-      - test.mattgerega.net
+    # No default hostnames -- this is environment-specific and must be
+    # supplied by the consuming helm-config (e.g. techradar-helm-config
+    # sets this per-environment from its own environment_hostname value).
+    hostnames: []
     rules:
       - matches:
           - path:
@@ -137,5 +122,3 @@ route:
         backendRefs:
           - identifier: frontend
             port: 80
-
-env_name: dev
