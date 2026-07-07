@@ -20,13 +20,13 @@ spec:
   data:
   - secretKey: authority
     remoteRef:
-      key: secrets-k8/techradar/{{ .Values.env_name }}/auth
+      key: secrets-k8/{{ .Values.vaultPathPrefix }}/{{ .Values.env_name }}/auth
       property: authority
   - secretKey: client_id
     remoteRef:
-      key: secrets-k8/techradar/{{ .Values.env_name }}/auth
+      key: secrets-k8/{{ .Values.vaultPathPrefix }}/{{ .Values.env_name }}/auth
       property: client_id
   - secretKey: client_secret
     remoteRef:
-      key: secrets-k8/techradar/{{ .Values.env_name }}/auth
+      key: secrets-k8/{{ .Values.vaultPathPrefix }}/{{ .Values.env_name }}/auth
       property: client_secret

@@ -1,3 +1,15 @@
+# Vault path prefix used to look up secrets (secrets-k8/<vaultPathPrefix>/<env_name>/...).
+# Override this if reusing this chart under a different app/vault layout.
+vaultPathPrefix: techradar
+
+# The Postgres instance data-api connects to. Defaults to the service name
+# techradar-helm-config's own postgres release creates (techradar-postgres)
+# and the database name it provisions -- override both to point at a
+# different in-cluster service or an external/managed Postgres instance.
+postgres:
+  host: techradar-postgres
+  database: techradar
+
 defaultPodOptions:
   imagePullSecrets:
     - name: cr-spydersoft-github
