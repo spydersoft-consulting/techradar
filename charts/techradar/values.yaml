@@ -16,6 +16,16 @@ controllers:
           repository: ghcr.io/spydersoft-consulting/techradar-frontend
           tag: latest
           pullPolicy: IfNotPresent
+        # frontend's reverse-proxy target for data-api's Service within this
+        # same release/namespace. Both controllers live in one release, so
+        # bjw-s names the Service "<fullname>-data-api" -- computed here via
+        # the chart's own naming helper rather than hardcoded (the baked-in
+        # appsettings.json default, http://techradar-data-api/, is stale:
+        # it matched an older topology where data-api's own release name
+        # made bjw-s collapse to a bare "techradar-data-api" Service name).
+        env:
+          - name: OidcProxySettings__ReverseProxy__Clusters__techRadarApi__Destinations__techRadarApi/destination1__Address
+            value: 'http://{{ include "techradar.fullname" . }}-data-api/'
         probes:
           liveness:
             enabled: true
