@@ -13,6 +13,8 @@ See each component's own README for development setup instructions.
 
 This repository was consolidated on 2026-07-06. The pipeline's PR, main (beta), and tag (release) paths have all been verified end-to-end; the previous `techradar-data-api` and `techradar-frontend` repositories will be archived shortly.
 
+<!-- test commit: verifying the redesigned techradar-helm-deploy pipeline (single deploy.yml, test -> stage -> production) -->
+
 ## Contributing
 
 1. Create your feature branch (`git checkout -b feature/fooBar`)
