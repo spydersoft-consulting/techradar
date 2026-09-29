@@ -112,6 +112,7 @@ extends:
     helmTagsCollection: "data_api=$(build.buildnumber),frontend=$(build.buildnumber),chart_version=$(build.buildnumber)"
 
     executeTests: true
+    testRunner: mtp
     testProjects: '**/*.Tests/*.csproj'
 
     useSonarCloud: true
