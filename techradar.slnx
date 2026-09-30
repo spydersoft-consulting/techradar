@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/data-api/" />
+  <Folder Name="/data-api/src/">
+    <Project Path="data-api/src/Spydersoft.TechRadar.Data.Api.Tests/Spydersoft.TechRadar.Data.Api.Tests.csproj" />
+    <Project Path="data-api/src/Spydersoft.TechRadar.Data.Api/Spydersoft.TechRadar.Data.Api.csproj" />
+  </Folder>
+  <Folder Name="/frontend/" />
+  <Folder Name="/frontend/src/">
+    <Project Path="frontend/src/Spydersoft.TechRadar.Frontend.Tests/Spydersoft.TechRadar.Frontend.Tests.csproj" />
+    <Project Path="frontend/src/Spydersoft.TechRadar.Frontend/Spydersoft.TechRadar.Frontend.csproj" />
+  </Folder>
+</Solution>
